@@ -1,0 +1,40 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+typedef enum {
+    news = 0, //开源中国 新闻
+    cnblogNews, //博客园 新闻
+    blogs, //开源中国 博客
+    cnblogArticles, //博客园 博客
+    newsDetial,
+    blogsDetial,
+    cnblogNewsDetial,
+    cnblogArticlesDetial,
+    synthesizeNews, //综合新闻
+    softNews, //软件更新
+    recommendBlogs, //推荐博客
+    hotNews, //热门博客
+    hotRecommend, //推荐排行
+    hotRead, //阅读排行
+    newsComment,
+    blogsComment,
+    cnblogNewsComment,
+    cnblogArticlesComment
+} requestType;
+
+#import "Unity.h"
+
+#endif
