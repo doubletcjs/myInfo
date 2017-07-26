@@ -340,13 +340,7 @@
 #pragma mark - 截屏
 - (UIImage *)capture
 {
-    CGFloat hight = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? 90 : 50;
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height-hight), self.view.opaque, 0.0);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
+    return [UIImage imageNamed:@"120x120.png"];
 }
 #pragma mark - 收藏
 - (BOOL)isCollection
