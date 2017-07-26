@@ -70,7 +70,7 @@
     NSArray *array = [NSArray arrayWithObjects:@"综合新闻", @"软件更新", @"推荐博客", @"热门新闻", @"推荐排行", @"阅读排行", nil];
     for (int i = 0; i < [array count]; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(16, 44*i+Y*(i+1), 100, 44);
+        button.frame = CGRectMake(16, 44*i+Y*(i+1), JSScreenWidth-16*2, 44);
         button.backgroundColor = [UIColor clearColor];
         button.titleLabel.font = [UIFont systemFontOfSize:16];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal]; 
@@ -80,7 +80,7 @@
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [_searchScrollView addSubview:button];
         
-        UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, button.frame.size.height+button.frame.origin.y, self.view.frame.size.width-14, 1)];
+        UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, button.frame.size.height+button.frame.origin.y, self.view.frame.size.width-14, 0.4)];
         lineLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleRightMargin;
         
         if (i == [array count]/2-1) {
@@ -106,6 +106,7 @@
 {
     CustomViewController *custom = [[CustomViewController alloc] init];
     custom.title = sender.currentTitle;
+    custom.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:custom animated:YES];
     [custom release];
 }
@@ -258,7 +259,7 @@
                     if (self.searchDisplayController.searchResultsTableView.tableFooterView == nil) {
                         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                         button.backgroundColor = [UIColor clearColor];
-                        button.frame = CGRectMake(0, 0, 320, 44);
+                        button.frame = CGRectMake(0, 0, JSScreenWidth, 44);
                         [button setTitle:@"点击加载更多" forState:UIControlStateNormal];
                         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateSelected];
@@ -268,10 +269,7 @@
                         
                         CGSize size = [button.currentTitle sizeWithFont:[UIFont systemFontOfSize:16] forWidth:320 lineBreakMode:NSLineBreakByCharWrapping];
                         
-                        CGFloat width = 320;
-                        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-                            width = 768;
-                        }
+                        CGFloat width = JSScreenWidth;
                         
                         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width/2-size.width/2-10, 3, size.width+20, 38)];
                         label.backgroundColor = [UIColor clearColor];

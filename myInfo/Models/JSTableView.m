@@ -120,7 +120,7 @@
             [self setHeaderHidden:NO];
             [self setFooterHidden:YES];
             
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, JSScreenWidth, 44)];
             label.textAlignment = NSTextAlignmentCenter;
             label.text = @"暂无数据";
             label.font = [UIFont systemFontOfSize:18];

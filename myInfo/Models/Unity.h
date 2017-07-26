@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h> 
 
 #import "Toast+UIView.h"
-#import "MobClick.h"
-#import "UMFeedback.h" 
+#import <UMMobClick/MobClick.h>
 #import "CXMLDocument.h"
 #import "JSNetworkEngine.h"
 #import "JSTableView.h"
@@ -20,6 +19,10 @@
 #undef NSLog
 #define NSLog(args, ...)
 #endif
+
+#define JSScreenBounds [UIScreen mainScreen].bounds
+#define JSScreenWidth [UIScreen mainScreen].bounds.size.width
+#define JSScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define RGBColor(Red,Green,Blue,Alpha) [UIColor colorWithRed:(Red)/255.0 green:(Green)/255.0 blue:(Blue)/255.0 alpha:(Alpha)]
 #define iOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) ? YES : NO

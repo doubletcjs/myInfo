@@ -8,12 +8,15 @@
 
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
-#import "WXApi.h"
+#import "GDTSplashAd.h"
+#import "GDTMobInterstitial.h"
 
-@interface AppDelegate () <WXApiDelegate>
+@interface AppDelegate () <GDTSplashAdDelegate, GDTMobInterstitialDelegate>
 {
     
 }
+@property (nonatomic) GDTSplashAd *splashAd;
+@property (strong, nonatomic) GDTMobInterstitial *interstitialAd;
 
 @end
 
@@ -25,35 +28,15 @@
     [_navigationController release];
     [super dealloc];
 }
-#pragma mark - 强制更新
-- (void)appUpdate:(NSDictionary *)appUpdateInfo
-{
-    NSString *version = [appUpdateInfo objectForKey:@"version"];
-    NSString *current_version = [appUpdateInfo objectForKey:@"current_version"];
-    NSString *update_log = [appUpdateInfo objectForKey:@"update_log"];
-    BOOL update = [[appUpdateInfo objectForKey:@"update"] boolValue];
-    
-    if (![version isEqualToString:current_version] && update) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"有可用的新版本%@", version] message:update_log delegate:self
-                                                  cancelButtonTitle:@"取消" otherButtonTitles:@"访问 Store", nil];
-        [alertView show];
-        alertView.tag = 10001;
-        [alertView release];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 10001 && buttonIndex != alertView.cancelButtonIndex) {
-        [MobClick event:@"更新"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/bo-ke-xin-wen/id827116087?l=en&mt=8"]];
-    }
-}
 
 - (void)initUMSocial
 {
-    [MobClick startWithAppkey:UMKEY];
-    [MobClick checkUpdateWithDelegate:self selector:@selector(appUpdate:)];
+    if (!TARGET_IPHONE_SIMULATOR) {
+        [MobClick setAppVersion:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+        
+        UMConfigInstance.appKey = UMKEY;
+        [MobClick startWithConfigure:UMConfigInstance];
+    }
 }
 #pragma mark -
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -61,7 +44,6 @@
     if (!TARGET_IPHONE_SIMULATOR) {
         [self initUMSocial];
     }
-    [WXApi registerApp:@"wxe6f7fa433c3b9490"];
     
     self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
     _window.backgroundColor = [UIColor whiteColor];
@@ -83,6 +65,16 @@
     [NSURLCache setSharedURLCache:urlCache];
     [urlCache release];
     
+    _splashAd = [[GDTSplashAd alloc] initWithAppkey:@"1102537476" placementId:@"8040226425520632"];
+    _splashAd.fetchDelay = 2;
+    _splashAd.delegate = self;
+    
+    [_splashAd loadAdAndShowInWindow:_window];
+    
+    _interstitialAd = [[GDTMobInterstitial alloc] initWithAppkey:@"1102537476" placementId:@"2040225485132073"];
+    _interstitialAd.delegate = self;
+    [_interstitialAd loadAd];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -102,6 +94,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [_interstitialAd presentFromRootViewController:[[UIApplication sharedApplication] keyWindow].rootViewController];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -113,15 +106,47 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-#pragma mark - 微信回调
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return  [WXApi handleOpenURL:url delegate:self];
+#pragma mark - GDTSplashAdDelegate
+/**
+ *  开屏广告成功展示
+ */
+- (void)splashAdSuccessPresentScreen:(GDTSplashAd *)splashAd {
+    NSLog(@"%s", __func__);
 }
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return  [WXApi handleOpenURL:url delegate:self];
+/**
+ *  开屏广告展示失败
+ */
+- (void)splashAdFailToPresent:(GDTSplashAd *)splashAd withError:(NSError *)error {
+    NSLog(@"%s\n%@", __func__, error);
 }
-
+#pragma mark - GDTMobInterstitialDelegate
+/**
+ *  广告预加载成功回调
+ *  详解:当接收服务器返回的广告数据成功后调用该函数
+ */
+- (void)interstitialSuccessToLoadAd:(GDTMobInterstitial *)interstitial {
+    NSLog(@"%s", __func__);
+}
+/**
+ *  广告预加载失败回调
+ *  详解:当接收服务器返回的广告数据失败后调用该函数
+ */
+- (void)interstitialFailToLoadAd:(GDTMobInterstitial *)interstitial error:(NSError *)error {
+    NSLog(@"%s", __func__);
+}
+/**
+ *  插屏广告视图展示成功回调
+ *  详解: 插屏广告展示成功回调该函数
+ */
+- (void)interstitialDidPresentScreen:(GDTMobInterstitial *)interstitial {
+    NSLog(@"%s", __func__);
+}
+/**
+ *  插屏广告展示结束回调
+ *  详解: 插屏广告展示结束回调该函数
+ */
+- (void)interstitialDidDismissScreen:(GDTMobInterstitial *)interstitial {
+    NSLog(@"%s", __func__);
+    [_interstitialAd loadAd];
+}
 @end

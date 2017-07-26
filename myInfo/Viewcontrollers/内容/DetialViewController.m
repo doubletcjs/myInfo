@@ -11,11 +11,7 @@
 #import "BlogsDetialItem.h"
 #import "CnblogNewsDetialItem.h"
 #import "SimpleWebViewController.h"
-#import "GDTMobBannerView.h"
-#import "WXApi.h"
-
-#import "TOActivityWXSession.h"
-#import "TOActivityWXTimeLine.h" 
+#import "GDTMobBannerView.h"  
 
 @interface DetialViewController () <UIWebViewDelegate, UIActionSheetDelegate, myTableViewDelegate, UIScrollViewDelegate, GDTMobBannerViewDelegate>
 {
@@ -239,14 +235,14 @@
     [tableView release];
     
     CGFloat hight = 50;
-    _bannerView = [[GDTMobBannerView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-hight-64, 320, hight)
+    _bannerView = [[GDTMobBannerView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-hight-64, JSScreenWidth, hight)
                                                    appkey:@"1102537476"
                                               placementId:@"9050009021315348"];
     _bannerView.delegate = self;
     _bannerView.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2, _bannerView.center.y);
     _bannerView.currentViewController = self;
     _bannerView.interval = 30;
-    _bannerView.isGpsOn = NO;
+    _bannerView.isGpsOn = YES;
     _bannerView.showCloseBtn = NO;
     _bannerView.isAnimationOn = YES;
     [_detialScrollView insertSubview:_bannerView aboveSubview:_webView];
@@ -272,29 +268,15 @@
     }
     
     if ([self isCollection]) {
-        if ([WXApi isWXAppInstalled]) {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], @"分享", nil];
-            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-            [actionSheet showInView:self.navigationController.view];
-            [actionSheet release];
-        } else {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], nil];
-            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-            [actionSheet showInView:self.navigationController.view];
-            [actionSheet release];
-        }
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], @"分享", nil];
+        actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        [actionSheet showInView:self.navigationController.view];
+        [actionSheet release];
     } else {
-        if ([WXApi isWXAppInstalled]) {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], @"分享", @"收藏", nil];
-            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-            [actionSheet showInView:self.navigationController.view];
-            [actionSheet release];
-        } else {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], @"收藏", nil];
-            actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-            [actionSheet showInView:self.navigationController.view];
-            [actionSheet release];
-        }
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"评论(%@)", _commentCount], @"分享", @"收藏", nil];
+        actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        [actionSheet showInView:self.navigationController.view];
+        [actionSheet release];
     }
 }
 
@@ -306,11 +288,6 @@
     } else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"分享"]) {
         [MobClick event:@"分享"];
         
-        TOActivityWXSession *weixinSession = [[TOActivityWXSession alloc] init];
-        TOActivityWXTimeLine *weixinTimeline = [[TOActivityWXTimeLine alloc] init];
-        
-        NSArray *browserActivities = [[NSArray alloc] initWithObjects:weixinSession, weixinTimeline, nil];
-        
         NSArray *activityItems = [[NSArray alloc] initWithObjects:
                                   _shareContent,
                                   _articlesLink,
@@ -318,7 +295,7 @@
                                   @"@博客新闻",
                                   [NSURL URLWithString:_articlesLink], nil];
         
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:browserActivities];
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[[UIActivity new]]];
         if (iOS_7) {
             activityViewController.excludedActivityTypes = @[UIActivityTypePostToFacebook,
                                                              UIActivityTypePostToTwitter,
@@ -353,10 +330,7 @@
         } else {
            [self presentViewController:activityViewController animated:YES completion:nil];
         }
-        
-        [weixinSession release];
-        [weixinTimeline release];
-        [browserActivities release];
+         
         [activityItems release];
         [activityViewController release];
     } else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"收藏"]) {
@@ -488,12 +462,14 @@
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSString *url = [request.URL absoluteString]; 
-        SimpleWebViewController *web = [[SimpleWebViewController alloc] init];
-        web.url = url;
-        [self.navigationController pushViewController:web animated:YES];
-        [web release];
-        
-        [MobClick event:@"浏览器"];
+        if ([url hasPrefix:@"http"]) {
+            SimpleWebViewController *web = [[SimpleWebViewController alloc] init];
+            web.url = url;
+            [self.navigationController pushViewController:web animated:YES];
+            [web release];
+            
+            [MobClick event:@"浏览器"];
+        }
         return NO;
     }
     return YES;

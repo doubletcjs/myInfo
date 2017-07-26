@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Sam Cooper Studio. All rights reserved.
 //
 
-#import "SetViewController.h"
-#import "UMFeedbackViewController.h"
+#import "SetViewController.h" 
 
 @interface SetViewController ()
 
@@ -74,7 +73,7 @@
 #pragma mark - tableView delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -115,28 +114,14 @@
         {
             cell.accessoryView = nil;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text =  [NSString stringWithFormat:@"博客新闻 v%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+            cell.textLabel.text =  [NSString stringWithFormat:@"博客新闻 v%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
         }
             break;
         case 2:
         {
             cell.accessoryView = nil;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            cell.textLabel.text = @"意见反馈";
-        }
-            break;
-        case 3:
-        {
-            cell.accessoryView = nil;
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
             cell.textLabel.text = @"给我评分";
-        }
-            break;
-        case 4:
-        {
-            cell.accessoryView = nil;
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            cell.textLabel.text = @"检测更新";
         }
             break;
             
@@ -165,25 +150,8 @@
             break;
         case 2:
         {
-            UMFeedbackViewController *feedBackViewController = [[UMFeedbackViewController alloc] initWithNibName:@"UMFeedbackViewController" bundle:nil];
-            feedBackViewController.appkey = UMKEY;
-            feedBackViewController.view.backgroundColor = [UIColor whiteColor];
-            feedBackViewController.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:feedBackViewController animated:YES];
-            [feedBackViewController release];
-        }
-            break;
-        case 3:
-        {
-            //NSString *str = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"827116087"];
             [MobClick event:@"评分"];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/bo-ke-xin-wen/id827116087?l=en&mt=8"]];
-        }
-            break;
-        case 4:
-        {
-            [self.view makeToastActivity];
-            [MobClick checkUpdateWithDelegate:self selector:@selector(appUpdate:)];
         }
             break;
             
@@ -191,53 +159,6 @@
             break;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - 检测更新
-- (void)appUpdate:(NSDictionary *)appInfo
-{
-    [self.view hideToastActivity];
-    
-    NSString *version = [appInfo objectForKey:@"version"];
-    NSString *current_version = [appInfo objectForKey:@"current_version"];
-    NSString *update_log = [appInfo objectForKey:@"update_log"];
-    BOOL update = [[appInfo objectForKey:@"update"] boolValue];
-    
-    if (![version isEqualToString:current_version] && update) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"有可用的新版本%@", version] message:update_log delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立刻更新", nil];
-        [alertView show];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"暂无可用更新" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex) {
-        [MobClick event:@"更新"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/bo-ke-xin-wen/id827116087?ls=1&mt=8"]];
-    }
-}
-#pragma mark - actionsheet delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == actionSheet.destructiveButtonIndex) {
-        [self.view makeToastActivityWithMsg:@"清理中..."];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-            [[SDURLCache sharedURLCache] removeAllCachedResponses];
-            
-            dispatch_async(dispatch_get_main_queue(), ^ {
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"cache"];
-                
-                self.fileSize = [NSString stringWithFormat:@"%.2f M", [self folderSizeAtPath:path]];
-                
-                [self.view hideToastActivity];
-                [_setTableView reloadData];
-            });
-        });
-    }
 }
 #pragma mark -
 - (void)didReceiveMemoryWarning
