@@ -85,11 +85,11 @@
 		69E4948319C38680003FC6DF /* 72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E4948019C38680003FC6DF /* 72x72.png */; };
 		69E4948419C38680003FC6DF /* 76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E4948119C38680003FC6DF /* 76x76.png */; };
 		69E4948519C38680003FC6DF /* 152x152.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E4948219C38680003FC6DF /* 152x152.png */; };
-		B5143D901F28775E00063C68 /* libGDTMobSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143D8F1F28775E00063C68 /* libGDTMobSDK.a */; };
 		B5143D921F287A5200063C68 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143D911F287A5200063C68 /* UMMobClick.framework */; };
 		B5143D941F287A8E00063C68 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143D931F287A8E00063C68 /* libsqlite3.tbd */; };
 		B5143D961F287A9700063C68 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143D951F287A9700063C68 /* libz.tbd */; };
 		B5143D981F287A9C00063C68 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143D971F287A9C00063C68 /* libxml2.tbd */; };
+		B5143DA21F28A1EF00063C68 /* libGDTMobSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5143DA11F28A1EF00063C68 /* libGDTMobSDK.a */; };
 		D30CBC6919C13F8F009B7B72 /* JSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D30CBC6819C13F8F009B7B72 /* JSCache.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D30CBCBB19C1987B009B7B72 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30CBCBA19C1987B009B7B72 /* MessageUI.framework */; };
 		D312B60F19B84B780050B755 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D312B5FF19B84B780050B755 /* MJRefresh.bundle */; };
@@ -243,16 +243,18 @@
 		69E4948019C38680003FC6DF /* 72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72x72.png; sourceTree = "<group>"; };
 		69E4948119C38680003FC6DF /* 76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76x76.png; sourceTree = "<group>"; };
 		69E4948219C38680003FC6DF /* 152x152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 152x152.png; sourceTree = "<group>"; };
-		B5143D8A1F28775E00063C68 /* GDTMobBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTMobBannerView.h; sourceTree = "<group>"; };
-		B5143D8B1F28775E00063C68 /* GDTMobInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTMobInterstitial.h; sourceTree = "<group>"; };
-		B5143D8C1F28775E00063C68 /* GDTNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTNativeAd.h; sourceTree = "<group>"; };
-		B5143D8D1F28775E00063C68 /* GDTSplashAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTSplashAd.h; sourceTree = "<group>"; };
-		B5143D8E1F28775E00063C68 /* GDTTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTTrack.h; sourceTree = "<group>"; };
-		B5143D8F1F28775E00063C68 /* libGDTMobSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGDTMobSDK.a; sourceTree = "<group>"; };
 		B5143D911F287A5200063C68 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		B5143D931F287A8E00063C68 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		B5143D951F287A9700063C68 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B5143D971F287A9C00063C68 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		B5143D9A1F28A1EF00063C68 /* GDTMobBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTMobBannerView.h; sourceTree = "<group>"; };
+		B5143D9B1F28A1EF00063C68 /* GDTMobInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTMobInterstitial.h; sourceTree = "<group>"; };
+		B5143D9C1F28A1EF00063C68 /* GDTNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTNativeAd.h; sourceTree = "<group>"; };
+		B5143D9D1F28A1EF00063C68 /* GDTNativeExpressAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTNativeExpressAd.h; sourceTree = "<group>"; };
+		B5143D9E1F28A1EF00063C68 /* GDTNativeExpressAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTNativeExpressAdView.h; sourceTree = "<group>"; };
+		B5143D9F1F28A1EF00063C68 /* GDTSplashAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTSplashAd.h; sourceTree = "<group>"; };
+		B5143DA01F28A1EF00063C68 /* GDTTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTTrack.h; sourceTree = "<group>"; };
+		B5143DA11F28A1EF00063C68 /* libGDTMobSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGDTMobSDK.a; sourceTree = "<group>"; };
 		D30CBC6719C13F8F009B7B72 /* JSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCache.h; sourceTree = "<group>"; };
 		D30CBC6819C13F8F009B7B72 /* JSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCache.m; sourceTree = "<group>"; };
 		D30CBCBA19C1987B009B7B72 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -313,8 +315,8 @@
 				D30CBCBB19C1987B009B7B72 /* MessageUI.framework in Frameworks */,
 				B5143D921F287A5200063C68 /* UMMobClick.framework in Frameworks */,
 				694D1A92198DEF3400F80796 /* CoreGraphics.framework in Frameworks */,
+				B5143DA21F28A1EF00063C68 /* libGDTMobSDK.a in Frameworks */,
 				694D1A94198DEF3400F80796 /* UIKit.framework in Frameworks */,
-				B5143D901F28775E00063C68 /* libGDTMobSDK.a in Frameworks */,
 				694D1A90198DEF3400F80796 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,7 +327,7 @@
 		69075EA6199560DC008DEF88 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B5143D891F28775E00063C68 /* GDTMob_4.5.7 */,
+				B5143D991F28A1EF00063C68 /* GDTMob */,
 				D312B5FE19B84B780050B755 /* MJRefresh */,
 				69CD387F199BB88A00ED6743 /* Networking */,
 				6943D5CC19967153008828F4 /* UM */,
@@ -677,17 +679,19 @@
 			path = "新闻";
 			sourceTree = "<group>";
 		};
-		B5143D891F28775E00063C68 /* GDTMob_4.5.7 */ = {
+		B5143D991F28A1EF00063C68 /* GDTMob */ = {
 			isa = PBXGroup;
 			children = (
-				B5143D8A1F28775E00063C68 /* GDTMobBannerView.h */,
-				B5143D8B1F28775E00063C68 /* GDTMobInterstitial.h */,
-				B5143D8C1F28775E00063C68 /* GDTNativeAd.h */,
-				B5143D8D1F28775E00063C68 /* GDTSplashAd.h */,
-				B5143D8E1F28775E00063C68 /* GDTTrack.h */,
-				B5143D8F1F28775E00063C68 /* libGDTMobSDK.a */,
+				B5143D9A1F28A1EF00063C68 /* GDTMobBannerView.h */,
+				B5143D9B1F28A1EF00063C68 /* GDTMobInterstitial.h */,
+				B5143D9C1F28A1EF00063C68 /* GDTNativeAd.h */,
+				B5143D9D1F28A1EF00063C68 /* GDTNativeExpressAd.h */,
+				B5143D9E1F28A1EF00063C68 /* GDTNativeExpressAdView.h */,
+				B5143D9F1F28A1EF00063C68 /* GDTSplashAd.h */,
+				B5143DA01F28A1EF00063C68 /* GDTTrack.h */,
+				B5143DA11F28A1EF00063C68 /* libGDTMobSDK.a */,
 			);
-			path = GDTMob_4.5.7;
+			path = GDTMob;
 			sourceTree = "<group>";
 		};
 		D30CBC6619C13F8F009B7B72 /* JSCache */ = {
@@ -1022,8 +1026,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen JianShao (DU93M2N4N2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YEY5X4M2R7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1041,17 +1045,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/myInfo/Models/UM",
-					"$(PROJECT_DIR)/myInfo/Models/UM/UMFeedback_iOS_1.41",
-					"$(PROJECT_DIR)/myInfo/Models/GDT_iOS_SDK",
-					"$(PROJECT_DIR)/myInfo/Models/WeChat",
-					"$(PROJECT_DIR)/myInfo/Models/GDTMob_4.5.7",
+					"$(PROJECT_DIR)/myInfo/Models/GDTMob",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfb33d85-881b-459f-b7b6-cf3d57097a3f";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = itinfo_Development;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1064,8 +1065,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen JianShao (DU93M2N4N2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YEY5X4M2R7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1083,17 +1084,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/myInfo/Models/UM",
-					"$(PROJECT_DIR)/myInfo/Models/UM/UMFeedback_iOS_1.41",
-					"$(PROJECT_DIR)/myInfo/Models/GDT_iOS_SDK",
-					"$(PROJECT_DIR)/myInfo/Models/WeChat",
-					"$(PROJECT_DIR)/myInfo/Models/GDTMob_4.5.7",
+					"$(PROJECT_DIR)/myInfo/Models/GDTMob",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfb33d85-881b-459f-b7b6-cf3d57097a3f";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = itinfo_Development;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
