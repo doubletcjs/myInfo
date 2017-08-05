@@ -8,7 +8,6 @@
 
 #import "JSNetworkEngine.h"
 #import "MTAnimatedLabel.h"
-#import "CXMLDocument.h"
 
 @interface JSNetworkEngine () <NSURLConnectionDelegate>
 {

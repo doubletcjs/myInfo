@@ -12,7 +12,7 @@
 
 - (UIBarButtonItem *)backBarButtonItem
 {
-    return [[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+    return [[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 }
 
 @end

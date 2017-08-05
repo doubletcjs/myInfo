@@ -8,21 +8,8 @@
 	<string>博客新闻</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>29x29.png</string>
-		<string>58x58.png</string>
-		<string>80x80.png</string>
-		<string>57x57.png</string>
-		<string>72x72.png</string>
-		<string>152x152.png</string>
-		<string>76x76.png</string>
-		<string>114x114.png</string>
-		<string>120x120.png</string>
-		<string>512x512.png</string>
-	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.samcooperstudio.itinfo</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

@@ -8,6 +8,8 @@
 
 #import "NewViewController.h"
 #import "DetialViewController.h"
+#import "SearchViewController.h"
+#import "CollectionViewController.h"
 
 @interface NewViewController () <UIScrollViewDelegate>
 
@@ -30,20 +32,32 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"新闻";
+    self.title = @"博客园";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ico_search"] style:UIBarButtonItemStylePlain target:self action:@selector(searchAction)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ico_love"] style:UIBarButtonItemStylePlain target:self action:@selector(collectionAction)];
     
     if (iOS_7) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    NSInteger maxCount = 4;
+    
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     _newsScrollView.showsHorizontalScrollIndicator = NO;
     _newsScrollView.showsVerticalScrollIndicator = NO;
     _newsScrollView.pagingEnabled = YES;
-    _newsScrollView.contentSize = CGSizeMake(width*2, 0);
+    _newsScrollView.contentSize = CGSizeMake(width*maxCount, 0);
     
-    for (int i = 0; i < 2; i++) {
-        JSTableView *tableView = [[JSTableView alloc] initWithType:i];
+    for (int i = 0; i < maxCount; i++) {
+        int customType = i;
+        if (i > 0 && i < maxCount-1) {
+            customType = i+1;
+        } else if (i == maxCount-1) {
+            customType = 1;
+        }
+        
+        JSTableView *tableView = [[JSTableView alloc] initWithType:customType];
         tableView.frame = CGRectMake(width*i, 0, _newsScrollView.frame.size.width, _newsScrollView.frame.size.height);
         tableView.autoresizingMask = _newsScrollView.autoresizingMask;
         tableView.navigationController = self.navigationController;
@@ -54,13 +68,25 @@
     _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
     self.navigationItem.titleView = _pageControl;
     _pageControl.userInteractionEnabled = NO;
-    _pageControl.numberOfPages = 2;
+    _pageControl.numberOfPages = maxCount;
     _pageControl.backgroundColor = [UIColor clearColor];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     _pageControl.currentPage = scrollView.contentOffset.x/scrollView.frame.size.width;
+}
+#pragma mark - 搜索
+- (void)searchAction {
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    searchVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searchVC animated:YES];
+}
+#pragma mark - 收藏
+- (void)collectionAction {
+    CollectionViewController *collectionVC = [[CollectionViewController alloc] init];
+    collectionVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:collectionVC animated:YES];
 }
 #pragma mark -
 - (void)didReceiveMemoryWarning

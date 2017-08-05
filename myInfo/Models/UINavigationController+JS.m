@@ -32,8 +32,8 @@
     UIColor *titleShadowColor = [UIColor clearColor];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:titleFont forKey:UITextAttributeFont];
-    [dict setObject:titleColor forKey:UITextAttributeTextColor];
+    [dict setObject:titleFont forKey:NSFontAttributeName];
+    [dict setObject:titleColor forKey:NSForegroundColorAttributeName];
     [dict setObject:titleShadowColor forKey:UITextAttributeTextShadowColor];
     self.navigationBar.titleTextAttributes = dict;
     [self.navigationBar setBackgroundColor:[UIColor clearColor]];

@@ -7,7 +7,6 @@
 //
 
 #import "JSTableView.h"
-#import "MJRefresh.h"
 #import "DetialViewController.h"
 
 #import "NewsItem.h"
@@ -65,23 +64,7 @@
 #pragma mark - 集成刷新控件
 - (void)setupRefresh
 {
-    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
-    [self addHeaderWithTarget:self action:@selector(headerRefreshing)];
-    
-    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
-    [self addFooterWithTarget:self action:@selector(footerRefreshing)];
-    
-    // 设置文字(也可以不设置,默认的文字在MJRefreshConst中修改)
-    self.headerPullToRefreshText = @"下拉刷新";
-    self.headerReleaseToRefreshText = @"松开刷新";
-    self.headerRefreshingText = @"正在刷新中...";
-    
-    self.footerPullToRefreshText = @"上拉加载更多";
-    self.footerReleaseToRefreshText = @"松开加载更多";
-    self.footerRefreshingText = @"正在加载中...";
-    
-    [self setFooterHidden:YES];
-    
+    [self setupRefresh:self headerAction:@selector(headerRefreshing) footerAction:@selector(footerRefreshing)];
     [self headerRefreshing];
 }
 #pragma mark - 刷新或加载
@@ -117,8 +100,8 @@
     self.tableFooterView = nil;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_objectArray.count == 0) {
-            [self setHeaderHidden:NO];
-            [self setFooterHidden:YES];
+            self.mj_header.hidden = NO;
+            self.mj_footer.hidden = YES;
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, JSScreenWidth, 44)];
             label.textAlignment = NSTextAlignmentCenter;
@@ -127,32 +110,32 @@
             self.tableFooterView = label;
             [label release];
         } else {
-            [self setHeaderHidden:NO];
-            [self setFooterHidden:NO];
+            self.mj_header.hidden = NO;
+            self.mj_footer.hidden = NO;
         }
         
         if (_currentPage == 1) {
             if ([seccuss isEqualToString:@"YES"]) {
                 if ([_objectArray count] < _pageSize) {
-                    [self setFooterHidden:YES];
+                    self.mj_footer.hidden = YES;
                 }
             } else {
-                [self setFooterHidden:YES];
+                self.mj_footer.hidden = YES;
             }
         } else {
             if ([_objectArray count] < (_pageSize*_currentPage)) {
-                [self setFooterHidden:YES];
+                self.mj_footer.hidden = YES;
             }
         }
         
-        [self headerEndRefreshing];
-        [self footerEndRefreshing];
+        [self.mj_header endRefreshing];
+        [self.mj_footer endRefreshing];
         
         [self reloadData];
         
         if (_type == hotNews || _type == hotRead || _type == hotRecommend) {
-            [self setHeaderHidden:NO];
-            [self setFooterHidden:YES];
+            self.mj_header.hidden = NO;
+            self.mj_footer.hidden = YES;
         }
          
         if (_type == newsComment|| _type == blogsComment|| _type == cnblogNewsComment || _type == cnblogArticlesComment) {
@@ -555,7 +538,7 @@
     NSInteger interval = [zone secondsFromGMTForDate: date];
     NSDate *localeDate = [date  dateByAddingTimeInterval: interval];
     
-    NSTimeInterval timeInterval = fabs(([self convertToTimeStamp:localeDate] - [self convertToTimeStamp:fromDate]))/1000;
+    NSTimeInterval timeInterval = (([self convertToTimeStamp:localeDate] - [self convertToTimeStamp:fromDate]))/1000;
     
     long temp = 0;
     NSString *result = @"";

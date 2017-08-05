@@ -45,10 +45,7 @@
     [_searchTableView addSubview:view];
     [view release];
      */
-    
-    _currentPage = 1;
-    
-    self.searchDisplayController.searchResultsTableView.tableFooterView = nil;
+    _currentPage = 1; 
     
     [self createScrollViewItem];
 }
@@ -57,13 +54,13 @@
 {
     CGFloat Y = 0;
     //分割线
-    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, Y, self.view.frame.size.width, 1)];
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, Y, self.view.frame.size.width, 0.4)];
     lineLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleRightMargin;
-    lineLabel.backgroundColor = [UIColor grayColor];
+    lineLabel.backgroundColor = [UIColor lightGrayColor];
     [_searchScrollView addSubview:lineLabel];
     [lineLabel release];
     
-    Y = Y+1;
+    Y = Y+0.4;
     
     //综合新闻、软件更新－－热门
     //推荐博客－－推荐排行、阅读排行
@@ -225,7 +222,7 @@
     }
     
     if (_currentPage == 1) {
-        [self.view makeToastActivity];
+        [self.view makeToastActivity:CSToastPositionCenter];
     }
     
     NSString *urlString = [NSString stringWithFormat:@"%@content=%@&pageIndex=%ld&pageSize=%d", searchAbsoluteURL, content, (long)_currentPage, 20];
@@ -259,7 +256,7 @@
                     if (self.searchDisplayController.searchResultsTableView.tableFooterView == nil) {
                         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                         button.backgroundColor = [UIColor clearColor];
-                        button.frame = CGRectMake(0, 0, JSScreenWidth, 44);
+                        button.frame = CGRectMake(0, 0, JSScreenWidth, 36);
                         [button setTitle:@"点击加载更多" forState:UIControlStateNormal];
                         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateSelected];
@@ -267,11 +264,11 @@
                         button.titleLabel.font = [UIFont systemFontOfSize:16];
                         [button addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventTouchUpInside];
                         
-                        CGSize size = [button.currentTitle sizeWithFont:[UIFont systemFontOfSize:16] forWidth:320 lineBreakMode:NSLineBreakByCharWrapping];
+                        CGSize size = [button.currentTitle sizeWithFont:[UIFont systemFontOfSize:16] forWidth:JSScreenWidth lineBreakMode:NSLineBreakByCharWrapping];
                         
                         CGFloat width = JSScreenWidth;
                         
-                        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width/2-size.width/2-10, 3, size.width+20, 38)];
+                        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width/2-size.width/2-10, 3, size.width+20, button.frame.size.height-3*2)];
                         label.backgroundColor = [UIColor clearColor];
                         label.layer.borderWidth = 0.4f;
                         label.layer.cornerRadius = 6;
@@ -339,7 +336,7 @@
     NSInteger interval = [zone secondsFromGMTForDate: date];
     NSDate *localeDate = [date  dateByAddingTimeInterval: interval];
     
-    NSTimeInterval timeInterval = fabs(([self convertToTimeStamp:localeDate] - [self convertToTimeStamp:fromDate]))/1000;
+    NSTimeInterval timeInterval = (([self convertToTimeStamp:localeDate] - [self convertToTimeStamp:fromDate]))/1000;
     
     long temp = 0;
     NSString *result = @"";

@@ -40,7 +40,7 @@
     _webView.delegate = self;
     _webView.autoresizesSubviews = YES;
     [_webView setBackgroundColor:[UIColor clearColor]];
-    [self.view makeToastActivity];
+    [self.view makeToastActivity:CSToastPositionCenter];
     
     NSDictionary *parames = [NSDictionary dictionary];
     
@@ -213,12 +213,13 @@
     _detialScrollView.bounces = NO;
     _detialScrollView.delegate = self;
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.tintColor = [UIColor whiteColor];
     [button setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 60, 40);
+    button.frame = CGRectMake(0, 0, 40, 40);
     button.backgroundColor = [UIColor clearColor];
     [button addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight; 
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = item;
@@ -385,7 +386,7 @@
         _collectionType = @"";
     }
     
-    [self.view makeToastActivity];
+    [self.view makeToastActivity:CSToastPositionCenter];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:_collectionId forKey:@"id"];

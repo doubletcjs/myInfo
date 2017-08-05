@@ -47,7 +47,7 @@
     }
     
     [_webView loadRequest:request];
-    [self.view makeToastActivity];
+    [self.view makeToastActivity:CSToastPositionCenter];
 }
 
 - (IBAction)openSafari:(id)sender
@@ -69,7 +69,7 @@
     }
     
     [_webView loadRequest:request];
-    [self.view makeToastActivity];
+    [self.view makeToastActivity:CSToastPositionCenter];
 }
 #pragma mark - webView delegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView

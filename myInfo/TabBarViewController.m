@@ -9,9 +9,6 @@
 #import "TabBarViewController.h"
 
 #import "NewViewController.h"
-#import "BlogViewController.h"
-#import "SearchViewController.h"
-#import "CollectionViewController.h"
 #import "SetViewController.h"
 
 @interface TabBarViewController ()
@@ -41,35 +38,14 @@
     
     newNav.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"新闻" image:[UIImage imageNamed:@"tabbar_news.png"] tag:4] autorelease];
     
-    BlogViewController *blog = [[BlogViewController alloc] init];
-    UINavigationController *blogNav = [[[UINavigationController alloc] init] autorelease];
-    [blogNav pushViewController:blog animated:NO];
-    [blog release];
-    
-    blogNav.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"博客" image:[UIImage imageNamed:@"tab_home.png"]  tag:1] autorelease];
-    
-    SearchViewController *search = [[SearchViewController alloc] init];
-    UINavigationController *searchNav = [[[UINavigationController alloc] init] autorelease];
-    [searchNav pushViewController:search animated:NO];
-    [search release];
-    
-    searchNav.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:2] autorelease];
-    
-    CollectionViewController *collection = [[CollectionViewController alloc] init];
-    UINavigationController *collectionNav = [[[UINavigationController alloc] init] autorelease];
-    [collectionNav pushViewController:collection animated:NO];
-    [collection release];
-    
-    collectionNav.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"收藏" image:[UIImage imageNamed:@"choiceness.png"] tag:4] autorelease];
-    
     SetViewController *set = [[SetViewController alloc] init];
     UINavigationController *setNav = [[[UINavigationController alloc] init] autorelease];
     [setNav pushViewController:set animated:NO];
     [set release];
     
-    setNav.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"设置" image:[UIImage imageNamed:@"tabbar_setting.png"] tag:4] autorelease];
+    setNav.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"设置" image:[UIImage imageNamed:@"ico_settings"] tag:4] autorelease];
     
-    self.viewControllers = [NSArray arrayWithObjects:newNav, blogNav, searchNav, collectionNav, setNav, nil];
+    self.viewControllers = [NSArray arrayWithObjects:newNav, setNav, nil];
 }
 
 - (void)didReceiveMemoryWarning
