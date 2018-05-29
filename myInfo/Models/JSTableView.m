@@ -49,6 +49,10 @@
     self.dataSource = self;
     self.delegate = self;
     
+    if (_type == newsComment || _type == blogsComment || _type == cnblogNewsComment || _type == cnblogArticlesComment) {
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    
     _pageSize = 20;
     
     [self setupRefresh];
@@ -362,7 +366,7 @@
             
             cell.authorLabel.text = [item.commentsItemDict objectForKey:item.commentsauthor];
             cell.dateLabel.text = dateString;
-            cell.contentLabel.text = [item.commentsItemDict objectForKey:item.commentscontent];
+            cell.contentLabel.text = [item.commentsItemDict objectForKey:item.commentscontent]; 
             
             [cell defineCell:item];
             
@@ -456,62 +460,65 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DetialViewController *detial = [[DetialViewController alloc] init];
-    switch (_type) {
-        case news:
-        {
-            detial.type = newsDetial;
-            NewsItem *item = (NewsItem *)[_objectArray objectAtIndex:indexPath.row];
-            detial.itemId = [[item.newsItemDict objectForKey:item.newsid] copy];
-            detial.commentCount = [[item.newsItemDict objectForKey:item.newscommentCount] copy];
+    if (_type == cnblogNewsComment || _type == cnblogArticlesComment || _type == newsComment || _type == blogsComment) {
+        
+    } else {
+        DetialViewController *detial = [[DetialViewController alloc] init];
+        switch (_type) {
+            case news:
+            {
+                detial.type = newsDetial;
+                NewsItem *item = (NewsItem *)[_objectArray objectAtIndex:indexPath.row];
+                detial.itemId = [[item.newsItemDict objectForKey:item.newsid] copy];
+                detial.commentCount = [[item.newsItemDict objectForKey:item.newscommentCount] copy];
+            }
+                break;
+            case blogs:
+            {
+                detial.type = blogsDetial;
+                BlogsItem *item = (BlogsItem *)[_objectArray objectAtIndex:indexPath.row];
+                detial.itemId = [[item.blogsItemDict objectForKey:item.blogsid] copy];
+                detial.commentCount = [[item.blogsItemDict objectForKey:item.blogscommentCount] copy];
+            }
+                break;
+            case cnblogNews:
+            case hotNews:
+            {
+                detial.type = cnblogNewsDetial;
+                CnblogNewsItem *item = (CnblogNewsItem *)[_objectArray objectAtIndex:indexPath.row];
+                detial.itemId = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewsid] copy];
+                detial.commentCount = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewscomments] copy];
+                detial.articlesLink = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewslink] copy];
+            }
+                break;
+            case cnblogArticles:
+            case hotRead:
+            case hotRecommend:
+            {
+                detial.type = cnblogArticlesDetial;
+                CnblogArticlesItem *item = (CnblogArticlesItem *)[_objectArray objectAtIndex:indexPath.row];
+                detial.itemId = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesid] copy];
+                detial.blogapp = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesblogapp] copy];
+                detial.articlesDate = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlespublished] copy];
+                detial.articlesTitle = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlestitle] copy];
+                detial.articlesSource = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesauthorname] copy];
+                detial.articlesLink = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticleslink] copy];
+                detial.commentCount = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlescomments] copy];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case blogs:
-        {
-            detial.type = blogsDetial;
-            BlogsItem *item = (BlogsItem *)[_objectArray objectAtIndex:indexPath.row];
-            detial.itemId = [[item.blogsItemDict objectForKey:item.blogsid] copy];
-            detial.commentCount = [[item.blogsItemDict objectForKey:item.blogscommentCount] copy];
-        }
-            break;
-        case cnblogNews:
-        case hotNews:
-        {
-            detial.type = cnblogNewsDetial;
-            CnblogNewsItem *item = (CnblogNewsItem *)[_objectArray objectAtIndex:indexPath.row];
-            detial.itemId = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewsid] copy];
-            detial.commentCount = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewscomments] copy];
-            detial.articlesLink = [[item.cnblogNewsItemDict objectForKey:item.cnblogNewslink] copy];
-        }
-            break;
-        case cnblogArticles:
-        case hotRead:
-        case hotRecommend:
-        {
-            detial.type = cnblogArticlesDetial;
-            CnblogArticlesItem *item = (CnblogArticlesItem *)[_objectArray objectAtIndex:indexPath.row];
-            detial.itemId = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesid] copy];
-            detial.blogapp = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesblogapp] copy];
-            detial.articlesDate = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlespublished] copy];
-            detial.articlesTitle = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlestitle] copy];
-            detial.articlesSource = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlesauthorname] copy];
-            detial.articlesLink = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticleslink] copy];
-            detial.commentCount = [[item.cnblogArticlesItemDict objectForKey:item.cnblogArticlescomments] copy];
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-    if (_type != cnblogNewsComment || _type != cnblogArticlesComment || _type != newsComment || _type != blogsComment) {
+        
         detial.hidesBottomBarWhenPushed = YES;
         [_navigationController pushViewController:detial animated:YES];
         
         [MobClick event:@"查看文章"];
+        
+        [detial release];
     }
     
-    [detial release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma mark - 获取到时间戳里的毫秒单位

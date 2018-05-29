@@ -93,6 +93,10 @@ typedef void(^getDataFeedBackDetialBlock) (id object, NSError *error);
 @property (nonatomic, copy) getDataFeedBackBlock getDataBlock;
 @property (nonatomic, copy) getDataFeedBackDetialBlock getDataDetialBlock;
 
+//获取字体size
++ (CGSize)sizeOfattributedString:(NSMutableAttributedString *)attributedString
+                          inSize:(CGSize)rangeSize;
+
 //UIColor 转 UIImage
 + (UIImage *)createImageWithColor: (UIColor *)color;
 //检查网络是否链接

@@ -25,10 +25,7 @@
 #pragma mark - 生成cell
 - (void)defineCell:(CommentsItem *)item
 {
-    CGFloat width = 304;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        width = 768-16;
-    }
+    CGFloat width = JSScreenWidth-15*2;
     
     _contentLabel.numberOfLines = 0;
     UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:16];
@@ -44,14 +41,22 @@
     _authorLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     _contentLabel.textColor = [UIColor blackColor];
     _dateLabel.textColor = [UIColor blackColor];
+    
+    for (UIView *view in self.subviews) {
+        if (view.tag == 101) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 26+labelSize.height+10, JSScreenWidth-15*2, 0.4)];
+    lineLabel.backgroundColor = [UIColor lightGrayColor];
+    lineLabel.tag = 101;
+    [self addSubview:lineLabel];
 }
 #pragma mark - 获取cell高度
 + (float)getCellHeight:(CommentsItem *)item
 {
-    CGFloat width = 304;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        width = 768-16;
-    }
+    CGFloat width = JSScreenWidth-15*2;
     
     CGFloat height = 26;
     UIFont *font = [UIFont fontWithName:@"STHeitiSC-Light" size:16];

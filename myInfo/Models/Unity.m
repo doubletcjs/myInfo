@@ -29,6 +29,14 @@
 @synthesize getDataBlock = _getDataBlock;
 @synthesize getDataDetialBlock = _getDataDetialBlock;
 
+#pragma mark - 获取字体size
++ (CGSize)sizeOfattributedString:(NSMutableAttributedString *)attributedString
+                          inSize:(CGSize)rangeSize {
+    CGSize size = [attributedString boundingRectWithSize:rangeSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    
+    return size;
+}
+
 + (NSString *)filterHTML:(NSString *)html trimWhiteSpace:(BOOL)trim
 {
     NSScanner * scanner = [NSScanner scannerWithString:html];

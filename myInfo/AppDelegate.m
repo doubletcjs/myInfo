@@ -56,6 +56,8 @@
     self.window.rootViewController = _navigationController;
     [self.window makeKeyAndVisible];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"cache"];
     SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*10   // 1MB mem cache

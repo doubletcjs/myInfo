@@ -95,7 +95,9 @@
     self.articlesLink = @"https://itunes.apple.com/cn/app/bo-ke-xin-wen/id827116087?l=en&mt=8";
     if (_collectionHtmlContent) {
         [_webView loadHTMLString:_collectionHtmlContent baseURL:nil];
-        [self.view hideToastActivity];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.view hideToastActivity];
+        });
     } else {
         Unity *unity = [[Unity alloc] init];
         
@@ -104,7 +106,9 @@
                 NSLog(@"error:%@", error);
                 
                 [self.view makeToast:[[error userInfo] objectForKey:NSLocalizedDescriptionKey] duration:1.0f position:@"center"];
-                [self.view hideToastActivity];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.view hideToastActivity];
+                });
             } else {
                 if (object) {
                     NSString *author_str = @"";
@@ -194,10 +198,14 @@
                     self.collectionType = [NSString stringWithFormat:@"%d", _type];
                     
                     [_webView loadHTMLString:html baseURL:nil];
-                    [self.view hideToastActivity];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.view hideToastActivity];
+                    });
                 } else {
                     [self.view makeToast:@"内容加载失败..." duration:1.0f position:@"center"];
-                    [self.view hideToastActivity];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.view hideToastActivity];
+                    });
                 }
             }
         } withType:_type];
@@ -405,7 +413,8 @@
         
         dict = nil;
         plistDict = nil;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.view hideToastActivity];
         });
     });
